@@ -62,7 +62,7 @@ const SignUp = () => {
                             type="email"
                             name="email"
                             className={styles.input}
-                            placeholder="Enter your email"
+                            placeholder="Enter your Email"
                             value={formData.email}
                             onChange={handleChange}
                             required
