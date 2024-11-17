@@ -3,6 +3,7 @@ import Home from "./Home";
 import List from "./List";
 import User from "./User";
 import Group from "./Group";
+import SignUp from "./SignUp";
 import MainLayout from "~/layout/MainLayout";
 
 const Router = () => {
@@ -10,6 +11,7 @@ const Router = () => {
     <Routes>
         <Route path = "/*" element={<MainLayout/>}>
             <Route path = "Home" element={<Home/>}></Route>
+            <Route path = "signup" element={<SignUp/>}></Route>
             <Route path = "list" element={<List/>}></Route>
             <Route path = "user" element={<User/>}></Route>
             <Route path = "group" element={<Group/>}></Route>
