@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -9,9 +9,11 @@ declare global {
   }
 }
 
-
 const Home: React.FC = () => {
   const mapRef = useRef<any>(null); // 지도를 참조하기 위한 ref
+  const overlayRef = useRef<any>(null); // 커스텀 오버레이를 참조하기 위한 ref
+  const contentRef = useRef<HTMLDivElement | null>(null); // 커스텀 오버레이 콘텐츠를 참조하기 위한 ref
+  const [memoContent, setMemoContent] = useState<string>("");
 
   useEffect(() => {
     // 카카오맵 스크립트를 HTML에 동적으로 추가
@@ -27,36 +29,130 @@ const Home: React.FC = () => {
         const container = document.getElementById("map");
         const options = {
           center: new window.kakao.maps.LatLng(33.450701, 126.570667),
-          level: 4
+          level: 4,
         };
 
         mapRef.current = new window.kakao.maps.Map(container, options);
+
+        // 커스텀 오버레이 생성
+        const content = document.createElement("div");
+        content.className = "overlay";
+        content.innerHTML = `
+          <div style="position: relative; width: 150px; height: 150px; display: flex; flex-direction: column; justify-content: space-between;">
+            <!-- 버튼 영역 -->
+            <div style="display: flex; justify-content: space-between;">
+              <button
+                class="move-btn" 
+                style="border: none; solid #ccc; font-size: 10px;"
+                onClick="handleAddMemo()"
+              >o</button>
+              <button 
+                class="check-btn"
+                style="border: none; solid #ccc; font-size: 10px;"
+                onClick="handleCloseMemo()"
+              >v</button>
+              <button 
+                class="close-btn"
+                style="border: none; solid #ccc; font-size: 10px;"
+                onClick="handleCloseMemo()"
+              >x</button>
+            </div>
+            <!-- 메모 입력 영역 -->
+            <textarea 
+              placeholder="메모를 입력하세요..." 
+              value="${memoContent}"
+              onInput="handleMemoChange(event)"
+              style="width: 100%; height: 100px; border: 1px solid #ccc; border-radius: 5px; padding: 5px; resize: none;"
+            ></textarea>
+          </div>
+        `;
+        contentRef.current = content;
+
+        const position = new window.kakao.maps.LatLng(33.450701, 126.570667); // 마커 위치
+
+        overlayRef.current = new window.kakao.maps.CustomOverlay({
+          map: mapRef.current,
+          content: content,
+          position: position,
+        });
+
+        // 위치좌표 변수
+        let startX: number, startY: number, startOverlayPoint: any;
+
+        const onMouseDown = (e: MouseEvent) => {
+          // 커서가 텍스트 영역에 있을 때는 지도 드래그 방지
+          window.kakao.maps.event.preventMap();
+          const target = e.target as HTMLElement;
+
+          if (target.tagName.toLowerCase() === "textarea") {
+            return; // 메모 내용에 커서가 있을 때는 드래그를 시작하지 않음
+          }
+
+          if (target.tagName.toLowerCase() === "button" && target.classList.contains("move-btn")) {
+            e.preventDefault();
+            const proj = mapRef.current.getProjection();
+            const overlayPos = overlayRef.current.getPosition();
+        
+            startX = e.clientX;
+            startY = e.clientY;
+        
+            startOverlayPoint = proj.containerPointFromCoords(overlayPos);
+            document.addEventListener("mousemove", onMouseMove);
+            document.addEventListener("mouseup", onMouseUp);
+          }
+        };
+
+        const onMouseMove = (e: MouseEvent) => {
+          e.preventDefault();
+          const proj = mapRef.current.getProjection();
+          const deltaX = startX - e.clientX;
+          const deltaY = startY - e.clientY;
+
+          const newPoint = new window.kakao.maps.Point(
+            startOverlayPoint.x - deltaX,
+            startOverlayPoint.y - deltaY
+          );
+
+          const newPos = proj.coordsFromContainerPoint(newPoint);
+          overlayRef.current.setPosition(newPos);
+        };
+
+        const onMouseUp = () => {
+          document.removeEventListener("mousemove", onMouseMove);
+          document.removeEventListener("mouseup", onMouseUp);
+        };
+
+        content.addEventListener("mousedown", onMouseDown);
       });
     };
 
-    // 컴포넌트 언마운트 시 스크립트 제거
     return () => {
       document.head.removeChild(script);
     };
-  }, []);
+  }, [memoContent]);
 
-    // 지도 중심 이동
-    const panTo = () => {
-      if (mapRef.current) {
-        const moveLatLon = new window.kakao.maps.LatLng(33.452613, 126.570888);
-        mapRef.current.panTo(moveLatLon);
-      }
-    };  
+  // 메모 내용 업데이트 함수
+  const handleMemoChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMemoContent(e.target.value);
+  };
 
-    return (
-      <div>
-        <h1>Kakao Map Example</h1>
-        <div id="map" style={{ width: "100vw", height: "70vh" }}></div>
-        <div style={{ marginTop: "20px", textAlign: "center" }}>
-          <button onClick={panTo}>지도 중심</button>
-        </div>
+  // 지도 중심 이동
+  const panTo = () => {
+    if (mapRef.current) {
+      const moveLatLon = new window.kakao.maps.LatLng(33.452613, 126.570888);
+      mapRef.current.panTo(moveLatLon);
+    }
+  };
+
+  return (
+    <div>
+      <h1>Kakao Map Example</h1>
+      <div id="map" style={{ width: "80vw", height: "80vh" }}></div>
+      <div style={{ marginTop: "20px", textAlign: "center" }}>
+        <button onClick={panTo}>지도 중심</button>
       </div>
-    );
+    </div>
+  );
 };
 
 export default Home;
