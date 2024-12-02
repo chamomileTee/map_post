@@ -4,6 +4,7 @@ import styles from './Home.module.css';
 
 const Home = () => {
   const [position, setPosition] = useState({ lat: 33.450701, lng: 126.570667 });
+  const [center, setCenter] = useState({ lat: 33.450701, lng: 126.570667 });
   const [isOpen, setIsOpen] = useState(false);
   const [memo, setMemo] = useState("");
 
@@ -11,10 +12,12 @@ const Home = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setPosition({
+          const newPosition = {
             lat: position.coords.latitude,
             lng: position.coords.longitude
-          });
+          };
+          setPosition(newPosition);
+          setCenter(newPosition);
         },
         (error) => {
           console.error("Error getting current position:", error);
@@ -49,10 +52,12 @@ const Home = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setPosition({
+          const newPosition = {
             lat: position.coords.latitude,
             lng: position.coords.longitude
-          });
+          };
+          setPosition(newPosition);
+          setCenter(newPosition);
         },
         (error) => {
           console.error("Error getting current position:", error);
@@ -66,7 +71,7 @@ const Home = () => {
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
       <Map 
-        center={position}
+        center={center}
         className={styles.map}
         level={3}
         onClick={handleMapClick}
