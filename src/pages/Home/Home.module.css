@@ -1,0 +1,72 @@
+.map {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .memoContainer {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 20px;
+    background: #fafafa;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    width: 300px;
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  .memoHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .memoTitle {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .closeButton {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #999;
+    margin-right: 0;
+    padding: 0;
+    width: 30px;
+    text-align: right;
+  }
+  
+  .memoTextarea {
+    width: 100%;
+    min-height: 150px;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    resize: vertical;
+    box-sizing: border-box;
+    margin: 0;
+  }
+  
+  .buttonContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .saveButton {
+    padding: 8px 15px;
+    background: #266CA9;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    width: 100px;
+  }
