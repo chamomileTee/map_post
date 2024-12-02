@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import styles from "./Home.module.css"; 
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -36,39 +37,23 @@ const Home: React.FC = () => {
 
         // 커스텀 오버레이 생성
         const content = document.createElement("div");
-        content.className = "overlay";
+        content.className = styles.overlay; // CSS 모듈 클래스 적용
         content.innerHTML = `
-          <div style="position: relative; width: 150px; height: 150px; display: flex; flex-direction: column; justify-content: space-between;">
-            <!-- 버튼 영역 -->
-            <div style="display: flex; justify-content: space-between;">
-              <button
-                class="move-btn" 
-                style="border: none; solid #ccc; font-size: 10px;"
-                onClick="handleAddMemo()"
-              >o</button>
-              <button 
-                class="check-btn"
-                style="border: none; solid #ccc; font-size: 10px;"
-                onClick="handleCloseMemo()"
-              >v</button>
-              <button 
-                class="close-btn"
-                style="border: none; solid #ccc; font-size: 10px;"
-                onClick="handleCloseMemo()"
-              >x</button>
-            </div>
-            <!-- 메모 입력 영역 -->
-            <textarea 
-              placeholder="메모를 입력하세요..." 
-              value="${memoContent}"
-              onInput="handleMemoChange(event)"
-              style="width: 100%; height: 100px; border: 1px solid #ccc; border-radius: 5px; padding: 5px; resize: none;"
-            ></textarea>
+          <div class="${styles.overlayButtons}">
+            <button class="${styles.overlayButton}" onClick="handleAddMemo()">o</button>
+            <button class="${styles.overlayButton}" onClick="handleCloseMemo()">v</button>
+            <button class="${styles.overlayButton}" onClick="handleCloseMemo()">x</button>
           </div>
+          <textarea 
+            class="${styles.overlayTextarea}"
+            placeholder="메모를 입력하세요..."
+            value="${memoContent}"
+            onInput="handleMemoChange(event)"
+          ></textarea>
         `;
         contentRef.current = content;
 
-        const position = new window.kakao.maps.LatLng(33.450701, 126.570667); // 마커 위치
+        const position = new window.kakao.maps.LatLng(33.450701, 126.570667);
 
         overlayRef.current = new window.kakao.maps.CustomOverlay({
           map: mapRef.current,
@@ -85,17 +70,17 @@ const Home: React.FC = () => {
           const target = e.target as HTMLElement;
 
           if (target.tagName.toLowerCase() === "textarea") {
-            return; // 메모 내용에 커서가 있을 때는 드래그를 시작하지 않음
+            return;
           }
 
-          if (target.tagName.toLowerCase() === "button" && target.classList.contains("move-btn")) {
+          if (target.tagName.toLowerCase() === "button" && target.classList.contains(styles.overlayButton)) {
             e.preventDefault();
             const proj = mapRef.current.getProjection();
             const overlayPos = overlayRef.current.getPosition();
-        
+
             startX = e.clientX;
             startY = e.clientY;
-        
+
             startOverlayPoint = proj.containerPointFromCoords(overlayPos);
             document.addEventListener("mousemove", onMouseMove);
             document.addEventListener("mouseup", onMouseUp);
@@ -136,7 +121,7 @@ const Home: React.FC = () => {
     setMemoContent(e.target.value);
   };
 
-  // 지도 중심 이동
+  // 지도 중심으로 이동. panTo는 부드럽게
   const panTo = () => {
     if (mapRef.current) {
       const moveLatLon = new window.kakao.maps.LatLng(33.452613, 126.570888);
@@ -146,11 +131,10 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      <h1>Kakao Map Example</h1>
-      <div id="map" style={{ width: "80vw", height: "80vh" }}></div>
-      <div style={{ marginTop: "20px", textAlign: "center" }}>
-        <button onClick={panTo}>지도 중심</button>
-      </div>
+      <div id="map" className={styles.map}></div>
+      <button className={styles.centerButton} onClick={panTo}>
+      지도 
+      </button>
     </div>
   );
 };
