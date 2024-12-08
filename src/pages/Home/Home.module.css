@@ -84,3 +84,21 @@
     cursor: pointer;
     z-index: 2;
   }
+
+  .fetchMemosButton {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 10px;
+    background: white;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    cursor: pointer;
+    z-index: 2;
+  }
+  
+  .fetchMemosButton:hover {
+    background-color: #0056b3;
+  }
+  

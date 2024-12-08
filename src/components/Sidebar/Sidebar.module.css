@@ -1,5 +1,17 @@
 .Sidebar {
+    text-align: center;
     width: 100px;
-    background: #c0ffee;
+    background: #3182ce;
     height: 100%;
+}
+
+.loginLink {
+    text-align: center;
+    margin-top: 16px;
+}
+
+.loginLink a {
+    color: #264091;
+    text-decoration: none;
+    font-size: 14px;
 }
