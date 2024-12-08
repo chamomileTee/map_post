@@ -29,6 +29,12 @@ const Home = () => {
     } else {
       console.error("Geolocation is not supported by this browser.");
     }
+    
+    const fetchMemos = async () => {
+      const memos = await fetchNearbyMemos();
+      setNearbyMemos(memos);
+    };
+    fetchMemos();
   }, []);
 
   const handleSave = async () => {
@@ -259,7 +265,7 @@ const Home = () => {
         }}
         className={styles.fetchMemosButton}
       >
-        새로고침
+        현 위치에서 검색
       </button>
     </div>
   );
