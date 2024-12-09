@@ -235,7 +235,13 @@ const Home = () => {
           </CustomOverlayMap>
         )}
         {viewMemo && (
-          <CustomOverlayMap position={{ lat: viewMemo.lat, lng: viewMemo.lng }} yAnchor={1.2}>
+          <CustomOverlayMap
+            position={{
+              lat: viewMemo.position.lat,
+              lng: viewMemo.position.lng,
+            }}
+            yAnchor={1.2}
+          >
             <div className={styles.memoContainer}>
               <div className={styles.memoHeader}>
                 <h3 className={styles.memoTitle}>메모 보기</h3>
