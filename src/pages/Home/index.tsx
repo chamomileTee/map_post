@@ -114,9 +114,15 @@ const Home = () => {
     //   const response = await fetch(
     //     `http://localhost:8080/api/nearby-memos?lat=${position.lat}&lng=${position.lng}&range=${range}`
     //   );
+  
     //   if (response.ok) {
     //     const data = await response.json();
-    //     return data;
+    //     const transformedData = data.map((memo) => ({
+    //       ...memo,
+    //       position: { lat: memo.lat, lng: memo.lng },
+    //     }));
+  
+    //     return transformedData;
     //   } else {
     //     console.error("Failed to fetch nearby memos:", response.statusText);
     //     return [];
@@ -129,16 +135,16 @@ const Home = () => {
 
     // 더미데이터
     const mockData = [
-      { lat: 35.880626, lng: 128.623641, memo: "메모 1" },
-      { lat: 35.882213, lng: 128.615107, memo: "메모 2" },
-      { lat: 35.881215, lng: 128.619108, memo: "메모 3" },
-      { lat: 35.880212, lng: 128.616324, memo: "메모 4" },
-      { lat: 35.870214, lng: 128.612614, memo: "메모 5" },
-      { lat: 35.885210, lng: 128.613754, memo: "메모 6" },
-      { lat: 35.884211, lng: 128.621614, memo: "메모 7" },
-      { lat: 35.883212, lng: 128.613334, memo: "메모 8" },
-      { lat: 35.875212, lng: 128.589341, memo: "메모 9" },
-      { lat: 35.873216, lng: 128.609324, memo: "메모 0" },
+      { position: { lat: 35.880626, lng: 128.623641 }, memo: "메모 1" },
+      { position: { lat: 35.882213, lng: 128.615107 }, memo: "메모 2" },
+      { position: { lat: 35.881215, lng: 128.619108 }, memo: "메모 3" },
+      { position: { lat: 35.880212, lng: 128.616324 }, memo: "메모 4" },
+      { position: { lat: 35.870214, lng: 128.612614 }, memo: "메모 5" },
+      { position: { lat: 35.885210, lng: 128.613754 }, memo: "메모 6" },
+      { position: { lat: 35.884211, lng: 128.621614 }, memo: "메모 7" },
+      { position: { lat: 35.883212, lng: 128.613334 }, memo: "메모 8" },
+      { position: { lat: 35.875212, lng: 128.589341 }, memo: "메모 9" },
+      { position: { lat: 35.873216, lng: 128.609324 }, memo: "메모 0" },
     ];
   
     // 현재 위치를 기준으로 가장 가까운 5개 정렬
@@ -146,11 +152,11 @@ const Home = () => {
       .map((memo) => ({
         ...memo,
         distance:
-          Math.abs(memo.lat - position.lat) +
-          Math.abs(memo.lng - position.lng),
+          Math.abs(memo.position.lat - position.lat) +
+          Math.abs(memo.position.lng - position.lng),
       }))
-      .sort((a, b) => a.distance - b.distance) 
-      .slice(0, 5); 
+      .sort((a, b) => a.distance - b.distance)
+      .slice(0, 5);
 
     return sortedMemos; 
   };  
@@ -175,7 +181,7 @@ const Home = () => {
         {nearbyMemos.map((memo, index) => (
           <MapMarker
             key={index}
-            position={{ lat: memo.lat, lng: memo.lng }}
+            position={memo.position}
             onClick={() => {
               setViewMemo(memo);
               setIsOpen(false); 
