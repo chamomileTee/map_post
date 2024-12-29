@@ -1,5 +1,5 @@
 .Sidebar {
-    width: 180px;
+    width: 250px;
     background: white;
     height: 100%;
     display: flex;
@@ -15,17 +15,21 @@
     margin-top: 10px;
     width: 120px;
     height: auto;
+    margin-bottom: 30px;
 }
 
 .settingsLink {
-    margin-top: auto;
-    padding: 15px 20px;
+    padding: 13px 20px;
     display: flex;
     align-items: center;
     text-decoration: none;
     color: #333;
     font-size: 16px;
     transition: background-color 0.2s ease;
+}
+
+.settingsLink:last-child {
+    margin-top: auto;
 }
 
 .settingsLink:hover {

@@ -1,91 +1,180 @@
 .map {
-    width: 100%;
-    height: 100%;
-  }
-  
-  .memoContainer {
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 20px;
-    background: #e9edf5;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    width: 300px;
-    font-family: Arial, sans-serif;
-    color: black;
-    cursor: default;
-  }
-  
-  .memoHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-  
-  .closeButton {
-    background: none;
-    border: none;
-    font-size: 18px;
-    cursor: pointer;
-    color: #999;
-    margin-right: 0;
-    padding: 0;
-    width: 30px;
-    text-align: right;
-  }
+  width: 100%;
+  height: 100%;
+}
 
-  .memoTitlearea, .memoTextarea {
-    width: 100%;
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #fafafa;
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    resize: vertical;
-    box-sizing: border-box;
-    margin: 0;
-  }
+.searchContainer {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+}
 
-  .memoTitlearea {
-      min-height: 30px;
-      margin-bottom: 0px;
-  }
+.searchInput {
+  width: 250px;
+  height: 40px;
+  padding: 0 40px 0 15px;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  font-size: 14px;
+}
 
-  .memoTextarea {
-      min-height: 150px;
-      margin-bottom: 12px;
-  }
-  
-  .buttonContainer {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-  }
-  
-  .saveButton {
-    padding: 8px 15px;
-    background: #5c80c9;
-    color: white;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-    width: 100px;
-  }
+.searchInput:focus {
+  outline: none;
+}
 
-  .currentLocationButton {
-    position: absolute;
-    bottom: 30px;
-    right: 30px;
-    padding: 10px;
-    background: white;
-    border: none;
-    border-radius: 4px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    cursor: pointer;
-    z-index: 2;
-    font-size: 16px;
-  }
+.searchButton {
+  position: absolute;
+  right: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.searchButton:focus {
+  outline: none;
+}
+
+.searchIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.searchResults {
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  width: 250px;
+  max-height: 400px;
+  overflow-y: auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  z-index: 2;
+}
+
+.searchItem {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.searchItem:hover {
+  background: #f5f5f5;
+}
+
+.searchItem h3 {
+  margin: 0 0 5px 0;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.searchItem p {
+  margin: 0;
+  font-size: 12px;
+  color: #666;
+}
+
+.memoContainer {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 20px;
+  background: #e9edf5;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  width: 300px;
+  font-family: Arial, sans-serif;
+  color: black;
+  cursor: default;
+}
+
+.memoHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #999;
+  margin-right: 0;
+  padding: 0;
+  width: 30px;
+  text-align: right;
+}
+
+.memoTitlearea, .memoTextarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #fafafa;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  resize: vertical;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.memoTitlearea:focus,
+.memoTextarea:focus {
+    outline: none;
+}
+
+.memoTitlearea {
+    min-height: 30px;
+    margin-bottom: 0px;
+}
+
+.memoTextarea {
+    min-height: 150px;
+    margin-bottom: 12px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.saveButton {
+  padding: 8px 15px;
+  background: #5c80c9;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  width: 100px;
+}
+
+.saveButton:focus {
+  outline: none;
+}
+
+.currentLocationButton {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  padding: 10px;
+  background: white;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  z-index: 2;
+  font-size: 16px;
+}
+
+.currentLocationButton:focus {
+  outline: none;
+}
