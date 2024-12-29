@@ -1,4 +1,5 @@
 import styles from './SignUp.module.css';
+import logo from '../../assets/images/logo_long.png';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
@@ -55,14 +56,16 @@ const SignUp = () => {
     return  (
         <div className={styles.pageWrapper}>
             <div className={styles.signUpContainer}>
-                <h1 className={styles.title}>Sign Up</h1>
+                <div className={styles.logoContainer}>
+                    <img src={logo} alt="PinBoard" className={styles.logo} />
+                </div>
                 <form onSubmit={handleSubmit}>
                     <div className={styles.formGroup}>
                         <input
                             type="email"
                             name="email"
                             className={styles.input}
-                            placeholder="Enter your Email"
+                            placeholder="이메일을 입력하세요."
                             value={formData.email}
                             onChange={handleChange}
                             required
@@ -73,7 +76,7 @@ const SignUp = () => {
                             type="text"
                             name="id"
                             className={styles.input}
-                            placeholder="Enter your ID"
+                            placeholder="닉네임을 입력하세요."
                             value={formData.id}
                             onChange={handleChange}
                             required
@@ -84,7 +87,7 @@ const SignUp = () => {
                             type="password"
                             name="password"
                             className={styles.input}
-                            placeholder="Enter your password"
+                            placeholder="비밀번호를 입력하세요."
                             value={formData.password}
                             onChange={handleChange}
                             required
@@ -95,18 +98,18 @@ const SignUp = () => {
                             type="password"
                             name="confirmPassword"
                             className={styles.input}
-                            placeholder="Confirm your password"
+                            placeholder="비밀번호를 다시 입력하세요."
                             value={formData.confirmPassword}
                             onChange={handleChange}
                             required
                         />
                     </div>
                     <button type="submit" className={styles.button}>
-                        Sign Up
+                        회원가입
                     </button>
                 </form>
                 <div className={styles.loginLink}>
-                    <Link to="/login">Back to Sign In</Link>
+                    <Link to="/login">로그인</Link>
                 </div>
             </div>
         </div>

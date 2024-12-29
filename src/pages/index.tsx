@@ -10,13 +10,13 @@ import MainLayout from "~/layout/MainLayout";
 const Router = () => {
   return <BrowserRouter>
     <Routes>
+        <Route path = "/signup" element={<SignUp/>}></Route>
+        <Route path = "/login" element={<Login/>}></Route>
         <Route path = "/*" element={<MainLayout/>}>
             <Route path = "Home" element={<Home/>}></Route>
-            <Route path = "signup" element={<SignUp/>}></Route>
             <Route path = "list" element={<List/>}></Route>
             <Route path = "user" element={<User/>}></Route>
             <Route path = "group" element={<Group/>}></Route>
-            <Route path = "login" element={<Login/>}></Route>
         </Route>
     </Routes>
   </BrowserRouter>

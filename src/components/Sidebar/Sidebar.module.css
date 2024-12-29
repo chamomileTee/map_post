@@ -1,5 +1,40 @@
 .Sidebar {
-    width: 100px;
-    background: #c0ffee;
+    width: 180px;
+    background: white;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.logoContainer {
+    padding: 5px;
+    text-align: center;
+}
+
+.logo {
+    margin-top: 10px;
+    width: 120px;
+    height: auto;
+}
+
+.settingsLink {
+    margin-top: auto;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    transition: background-color 0.2s ease;
+}
+
+.settingsLink:hover {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.settingsIcon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
 }

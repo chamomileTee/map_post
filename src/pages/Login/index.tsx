@@ -1,4 +1,5 @@
 import styles from './Login.module.css';
+import logo from '../../assets/images/logo_long.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
@@ -41,8 +42,7 @@ const Login = () => {
                 // 토큰 저장 (예: localStorage 또는 cookie)
                 localStorage.setItem('authToken', data.token);
 
-                // 로그인 성공 후 대시보드로 이동
-                navigate('/dashboard');
+                navigate('/Home');
             } else {
                 const errorData = await response.json();
                 setError(errorData.message || '로그인에 실패하였습니다.');
@@ -56,7 +56,9 @@ const Login = () => {
     return (
         <div className={styles.pageWrapper}>
             <div className={styles.loginContainer}>
-                <h1 className={styles.title}>Login</h1>
+                <div className={styles.logoContainer}>
+                    <img src={logo} alt="PinBoard" className={styles.logo} />
+                </div>
                 <form onSubmit={handleSubmit}>
                     {error && <p className={styles.error}>{error}</p>}
                     <div className={styles.formGroup}>
@@ -64,7 +66,7 @@ const Login = () => {
                             type="email"
                             name="email"
                             className={styles.input}
-                            placeholder="Enter your Email"
+                            placeholder="이메일을 입력하세요."
                             value={formData.email}
                             onChange={handleChange}
                             required
@@ -75,18 +77,18 @@ const Login = () => {
                             type="password"
                             name="password"
                             className={styles.input}
-                            placeholder="Enter your Password"
+                            placeholder="비밀번호를 입력하세요."
                             value={formData.password}
                             onChange={handleChange}
                             required
                         />
                     </div>
                     <button type="submit" className={styles.button}>
-                        Login
+                        로그인
                     </button>
                 </form>
                 <div className={styles.signUpLink}>
-                    <Link to="/signup">Sign Up</Link>
+                    <Link to="/signup">회원가입</Link>
                 </div>
             </div>
         </div>

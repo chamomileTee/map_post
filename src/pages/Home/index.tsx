@@ -7,6 +7,7 @@ const Home = () => {
   const [center, setCenter] = useState({ lat: 33.450701, lng: 126.570667 });
   const [isOpen, setIsOpen] = useState(false);
   const [memo, setMemo] = useState("");
+  const [title, setTitle] = useState("");
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -33,14 +34,14 @@ const Home = () => {
     setIsOpen(false);
   };
 
-  const handleDragEnd = (marker) => {
+  const handleDragEnd = (marker: kakao.maps.Marker) => {
     setPosition({
       lat: marker.getPosition().getLat(),
       lng: marker.getPosition().getLng(),
     });
   };
 
-  const handleMapClick = (_t, mouseEvent) => {
+  const handleMapClick = (_t: kakao.maps.Map, mouseEvent: kakao.maps.event.MouseEvent) => {
     setPosition({
       lat: mouseEvent.latLng.getLat(),
       lng: mouseEvent.latLng.getLng(),
@@ -94,7 +95,16 @@ const Home = () => {
               onTouchStart={(e) => e.stopPropagation()}
             >
               <div className={styles.memoHeader}>
-                <h3 className={styles.memoTitle}>메모</h3>
+                <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="제목"
+                    className={styles.memoTitlearea}
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onTouchStart={(e) => e.stopPropagation()}
+                  />
                 <button 
                   onClick={(e) => {
                     e.stopPropagation();
