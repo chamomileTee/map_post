@@ -8,6 +8,7 @@ const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [memo, setMemo] = useState("");
   const [title, setTitle] = useState("");
+  const [map, setMap] = useState<kakao.maps.Map>();
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -50,7 +51,7 @@ const Home = () => {
   };
 
   const getCurrentLocation = () => {
-    if (navigator.geolocation) {
+    if (navigator.geolocation && map) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const newPosition = {
@@ -59,6 +60,8 @@ const Home = () => {
           };
           setPosition(newPosition);
           setCenter(newPosition);
+
+          map.panTo(new kakao.maps.LatLng(newPosition.lat, newPosition.lng));
         },
         (error) => {
           console.error("Error getting current position:", error);
@@ -76,6 +79,7 @@ const Home = () => {
         className={styles.map}
         level={3}
         onClick={handleMapClick}
+        onCreate={setMap}
       >
         <MapMarker 
           position={position}
