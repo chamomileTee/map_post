@@ -191,7 +191,7 @@ const Home = () => {
               <textarea
                 value={memo}
                 onChange={(e) => setMemo(e.target.value)}
-                placeholder="메모를 입력하세요"
+                placeholder="메모를 입력하세요."
                 className={styles.memoTextarea}
                 onClick={(e) => e.stopPropagation()}
                 onMouseDown={(e) => e.stopPropagation()}

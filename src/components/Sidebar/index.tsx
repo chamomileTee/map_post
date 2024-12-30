@@ -15,7 +15,7 @@ const Sidebar = () => {
             </Link>
             <Link to="/list" className={styles.menuLink}>
                 <img src={listIcon} alt="List" className={styles.menuIcon} />
-                <span>글 리스트</span>
+                <span>메모 리스트</span>
             </Link>
             <Link to="/group" className={styles.menuLink}>
                 <img src={groupIcon} alt="Group" className={styles.menuIcon} />

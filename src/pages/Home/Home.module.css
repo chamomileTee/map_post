@@ -112,6 +112,10 @@
   text-align: right;
 }
 
+.closeButton:focus {
+  outline: none;
+}
+
 .memoTitlearea, .memoTextarea {
   width: 100%;
   padding: 10px;

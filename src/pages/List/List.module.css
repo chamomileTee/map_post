@@ -1,0 +1,167 @@
+.listContainer {
+  padding: 30px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0px;
+}
+
+.groupSelector {
+  width: 200px;
+}
+
+.select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: white;
+  font-size: 13px;
+}
+
+.memoList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.memoItem {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.memoHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.memoTitle {
+  margin: 0;
+  font-size: 19px;
+  color: #333;
+}
+
+.memoActions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.actionButton {
+  padding: 7px 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #f5f7fc;
+  color: #5c80c9;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.deleteButton {
+  padding: 7px 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #f5f7fc;
+  color: #ff4444;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.actionButton:hover,
+.deleteButton:hover {
+  background-color: #f1f1f1;
+}
+
+.mapLink {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #5c80c9;
+  color: white;
+  font-size: 13px;
+}
+
+.mapLink:hover {
+  background-color: #385a9e;
+  color: rgba(255, 255, 255, 0.959);
+}
+
+.actionButton:focus,
+.deleteButton:focus,
+.mapLink:focus {
+  outline: none;
+}
+
+.memoContent {
+  margin: 0;
+  color: #666;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.memoFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  color: #777;
+  font-size: 11.5px;
+}
+
+.memoAuthor {
+  color: #666;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.pagination button {
+  padding: 7px 12px;
+  border: none;
+  background: none;
+  color: #666;
+  cursor: pointer;
+}
+
+.pagination button:focus {
+  outline: none;
+}
+
+.pagination button.active {
+  background-color: #f5f7fc;
+  color: rgb(0, 0, 0);
+  border-radius: 6px;
+}
+
+.pageNumbers {
+  display: flex;
+  gap: 5px;
+}
+
+.pageButton {
+  padding: 8px 12px;
+  border: none;
+  background: none;
+  color: #666;
+  cursor: pointer;
+}
+
+.pageButton:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}  
