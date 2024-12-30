@@ -68,7 +68,7 @@ const User = () => {
                 className={styles.editButton}
                 onClick={() => setIsEditingNickname(true)}
               >
-                수정
+                변경
               </button>
             </div>
           )}
