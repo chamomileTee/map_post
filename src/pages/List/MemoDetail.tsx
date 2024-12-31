@@ -23,8 +23,8 @@ const MemoDetail = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [memo, setMemo] = useState({
     id: "1",
-    title: "강남 맛집 탐방",
-    content: "강남역 3번 출구 앞 새로 생긴 카페. 분위기도 좋고 커피도 맛있어요.",
+    title: "강남 맛집 탐방ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    content: "강남역 3번 출구 앞 새로 생긴 카페.분위기도 좋고 커피도 맛있어요.dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddss",
     author: {
       id: "user1",
       name: "김철수"
@@ -75,7 +75,14 @@ const MemoDetail = () => {
         id: currentUserId,
         name: "김철수"
       },
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toLocaleString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      })
     };
 
     setComments([...comments, newComment]);
@@ -156,7 +163,7 @@ const MemoDetail = () => {
               <div className={styles.commentHeader}>
                 <span className={styles.commentAuthor}>{comment.author.name}</span>
                 <span className={styles.commentDate}>
-                  {new Date(comment.createdAt).toLocaleDateString()}
+                  {comment.createdAt}
                 </span>
               </div>
               <p className={styles.commentContent}>{comment.content}</p>

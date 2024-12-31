@@ -3,6 +3,25 @@
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #eef2fc;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ccd5ec;
 }
 
 .backButton {
@@ -89,6 +108,9 @@
   margin: 0;
   font-size: 19px;
   color: #333;
+  word-wrap: break-word;
+  word-break: break-all;
+  max-width: 600px;
 }
   
 .hiddenBadge {
@@ -159,6 +181,11 @@
   font-size: 15px;
   line-height: 1.5;
   margin-bottom: 20px;
+  max-height: 300px;
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: pre-wrap;
+  overflow-x: hidden;
 }
 
 .memoFooter {
@@ -202,7 +229,7 @@
   border-radius: 8px;
   font-size: 14px;
   resize: none;
-  line-height: 20px;
+  font-family: Arial, sans-serif;
 }
 
 .sendButton {
@@ -236,6 +263,8 @@
   padding: 16px;
   border-radius: 8px;
   background-color: #f8f9fa;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .commentHeader {
@@ -260,6 +289,7 @@
   color: #666;
   font-size: 14px;
   line-height: 1.5;
+  white-space: pre-wrap;
 }
 
 .actionButton:focus,

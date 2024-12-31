@@ -28,8 +28,8 @@ const List = () => {
   const [memos, setMemos] = useState<Memo[]>([
     {
       id: "1",
-      title: "강남 맛집 탐방",
-      content: "강남역 3번 출구 앞 새로 생긴 카페. 분위기도 좋고 커피도 맛있어요.",
+      title: "강남 맛집 탐방dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      content: "강남역 3번 출구 앞 새로 생긴 카페. 분위기도 좋고 커피도 맛있어요.ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
       author: {
         id: "user1",
         name: "김철수"

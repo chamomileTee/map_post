@@ -40,8 +40,8 @@ const Group = () => {
     },
     {
       id: "2",
-      name: "맛집 동호회",
-      detail: "대구 맛집 공유 그룹입니다.",
+      name: "맛집 동호회ddddddddddddddddddddddddddddddddddddddddd",
+      detail: "대구 맛집 공유 그룹입니다.dddddddddddddddddddddddddddddddddddddddddd",
       members: [
         { id: "1", name: "김철수", isLeader: true },
         { id: "2", name: "이영희", isLeader: false },
