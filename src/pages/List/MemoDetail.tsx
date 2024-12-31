@@ -18,9 +18,30 @@ interface Comment {
 const MemoDetail = () => {
   const navigate = useNavigate();
   const [comment, setComment] = useState('');
-  const [comments, setComments] = useState<Comment[]>([]);
+  const [comments, setComments] = useState<Comment[]>([
+    {
+      id: "1",
+      content: "정말 맛있어 보이는 카페네요! 꼭 가보고 싶어요.",
+      author: { id: "user2", name: "이영희" },
+      createdAt: "2024-01-02T10:30:00Z"
+    },
+    {
+      id: "2",
+      content: "저도 얼마 전에 다녀왔는데 커피가 정말 맛있었어요.",
+      author: { id: "user1", name: "김철수" },
+      createdAt: "2024-01-02T11:15:00Z"
+    },
+    {
+      id: "3",
+      content: "다음에 갈 때는 디저트도 꼭 먹어보세요!",
+      author: { id: "user1", name: "김철수" },
+      createdAt: "2024-01-02T14:45:00Z"
+    }
+  ]);
   const currentUserId = 'user1';
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deletingCommentId, setDeletingCommentId] = useState<string | null>(null);
   const [memo, setMemo] = useState({
     id: "1",
     title: "강남 맛집 탐방ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
@@ -87,6 +108,19 @@ const MemoDetail = () => {
 
     setComments([...comments, newComment]);
     setComment('');
+  };
+
+  const handleDeleteComment = (commentId: string) => {
+    setDeletingCommentId(commentId);
+    setShowDeleteConfirm(true);
+  };
+
+  const confirmDeleteComment = () => {
+    if (deletingCommentId) {
+      setComments(comments.filter(c => c.id !== deletingCommentId));
+      setShowDeleteConfirm(false);
+      setDeletingCommentId(null);
+    }
   };
 
   return (
@@ -162,15 +196,49 @@ const MemoDetail = () => {
             <div key={comment.id} className={styles.commentItem}>
               <div className={styles.commentHeader}>
                 <span className={styles.commentAuthor}>{comment.author.name}</span>
-                <span className={styles.commentDate}>
-                  {comment.createdAt}
-                </span>
+                <div className={styles.commentMetadata}>
+                  {comment.author.id === currentUserId && (
+                    <button
+                      onClick={() => handleDeleteComment(comment.id)}
+                      className={styles.deleteCommentButton}
+                    >
+                      삭제
+                    </button>
+                  )}
+                  <span className={styles.commentDate}>
+                    {new Date(comment.createdAt).toLocaleString('ko-KR', {
+                      year: 'numeric',
+                      month: '2-digit',
+                      day: '2-digit',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      hour12: false
+                    })}
+                  </span>
+                </div>
               </div>
               <p className={styles.commentContent}>{comment.content}</p>
             </div>
           ))}
         </div>
       </div>
+
+      {showDeleteConfirm && (
+        <div className={styles.modal}>
+          <div className={styles.modalContent}>
+            <h3>댓글 삭제</h3>
+            <p>정말 삭제하시겠습니까?</p>
+            <div className={styles.modalActions}>
+              <button onClick={() => setShowDeleteConfirm(false)} className={`${styles.button} ${styles.cancelButton}`}>
+                취소
+              </button>
+              <button onClick={confirmDeleteComment} className={`${styles.button} ${styles.dangerButton}`}>
+                삭제
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

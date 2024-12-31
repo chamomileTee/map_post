@@ -100,6 +100,10 @@
   margin-bottom: 15px;
 }
 
+.memoTitle {
+  font-size: 18px;
+}
+
 .closeButton {
   background: none;
   border: none;
@@ -116,7 +120,7 @@
   outline: none;
 }
 
-.memoTitlearea, .memoTextarea {
+.memoTitlearea, .memoTextarea, .readOnlyTextarea {
   width: 100%;
   padding: 10px;
   border-radius: 4px;
@@ -165,11 +169,10 @@
   outline: none;
 }
 
-.currentLocationButton {
+.currentLocationButton, .fetchMemosButton {
   position: absolute;
   bottom: 30px;
-  right: 30px;
-  padding: 12px;
+  padding: 0 12px;
   background: white;
   border: none;
   border-radius: 10px;
@@ -177,8 +180,58 @@
   cursor: pointer;
   z-index: 2;
   font-size: 16px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.currentLocationButton:focus {
+.currentLocationButton {
+  right: 30px;
+}
+
+.fetchMemosButton {
+  right: 140px;
+}
+
+.refreshIcon {
+  width: 15px;
+  height: 15px;
+}
+
+.memoFooter {
+  margin-top: 0px;
+  font-size: 12px;
+  color: #666;
+}
+
+.memoAuthor, .memoCreatedAt {
+  margin: 5px 0;
+}
+
+.createdAtAndHideContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hideButton {
+  cursor: pointer;
+  color: #f76538;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 12px;
+  padding: 0;
+  margin-left: 10px;
+}
+
+.hideButton:hover {
+  color: #d32f2f;
+}
+
+.currentLocationButton:focus,
+.fetchMemosButton:focus,
+.hideButton:focus {
   outline: none;
 }
