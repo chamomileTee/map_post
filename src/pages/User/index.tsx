@@ -2,24 +2,26 @@ import { useState } from 'react';
 import styles from './User.module.css';
 
 interface UserInfo {
-  nickname: string;
+  name: string;
   email: string;
+  password: string;
 }
 
 const User = () => {
   const [userInfo, setUserInfo] = useState<UserInfo>({
-    nickname: "김철수",
-    email: "user@example.com"
+    name: "김철수",
+    email: "user@example.com",
+    password: "hello"
   });
   const [isEditingNickname, setIsEditingNickname] = useState(false);
   const [isEditingPassword, setIsEditingPassword] = useState(false);
-  const [newNickname, setNewNickname] = useState(userInfo.nickname);
+  const [newNickname, setNewNickname] = useState(userInfo.name);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleNicknameSubmit = () => {
-    setUserInfo({ ...userInfo, nickname: newNickname });
+    setUserInfo({ ...userInfo, name: newNickname });
     setIsEditingNickname(false);
   };
 
@@ -63,7 +65,7 @@ const User = () => {
             </div>
           ) : (
             <div className={styles.settingValue}>
-              {userInfo.nickname}
+              {userInfo.name}
               <button 
                 className={styles.editButton}
                 onClick={() => setIsEditingNickname(true)}

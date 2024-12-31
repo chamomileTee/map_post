@@ -10,13 +10,12 @@ interface Memo {
     id: string;
     name: string;
   };
+  group: string;
   createdAt: string;
   location: {
     lat: number;
     lng: number;
   };
-  groupId: string | null;
-  groupName: string;
   is_hidden: number;
 }
 
@@ -28,19 +27,18 @@ const List = () => {
   const [memos, setMemos] = useState<Memo[]>([
     {
       id: "1",
-      title: "강남 맛집 탐방dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-      content: "강남역 3번 출구 앞 새로 생긴 카페. 분위기도 좋고 커피도 맛있어요.ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      title: "경북대 북문 맛집",
+      content: "북문 앞 새로 생긴 돈까스 맛집 발견! 가성비 좋고 특히 소스가 맛있어요.",
       author: {
-        id: "user1",
+        id: "1",
         name: "김철수"
       },
+      group: "맛집 탐방",
       createdAt: "2024-01-01T09:00:00Z",
       location: {
-        lat: 37.498095,
-        lng: 127.027610
+        lat: 35.890626,
+        lng: 128.613641
       },
-      groupId: "group1",
-      groupName: "맛집 탐방",
       is_hidden: 0
     },
     {
@@ -48,16 +46,15 @@ const List = () => {
       title: "홍대 벽화 거리",
       content: "홍대입구역 9번 출구에서 5분 거리에 있는 벽화 거리. 사진 찍기 좋은 장소예요.",
       author: {
-        id: "user2",
+        id: "2",
         name: "이영희"
       },
+      group: "서울 명소",
       createdAt: "2024-01-02T14:30:00Z",
       location: {
         lat: 37.557527,
         lng: 126.923596
       },
-      groupId: "group2",
-      groupName: "서울 명소",
       is_hidden: 1
     }
   ]);
@@ -126,7 +123,7 @@ const List = () => {
                 </button>
                 {memo.is_hidden === 0 && (
                   <Link 
-                    to={`/Home?lat=${memo.location.lat}&lng=${memo.location.lng}`} 
+                    to={`/Home?id=${memo.id}`} 
                     className={styles.mapLink}
                   >
                     지도에서 보기
@@ -136,7 +133,7 @@ const List = () => {
             </div>
             <p className={styles.memoContent}>{memo.content}</p>
             <div className={styles.memoFooter}>
-              <span>{memo.groupName} ({memo.author.name})</span>
+              <span>{memo.group} ({memo.author.name})</span>
               <span>{new Date(memo.createdAt).toLocaleDateString()}</span>
             </div>
           </div>

@@ -5,6 +5,23 @@ import moreIcon from '../../assets/images/more.png';
 import sendIcon from '../../assets/images/send.png';
 import styles from './MemoDetail.module.css';
 
+interface Memo {
+  id: string;
+  title: string;
+  content: string;
+  author: {
+    id: string;
+    name: string;
+  };
+  group: string;
+  createdAt: string;
+  location: {
+    lat: number;
+    lng: number;
+  };
+  is_hidden: number;
+}
+
 interface Comment {
   id: string;
   content: string;
@@ -22,41 +39,49 @@ const MemoDetail = () => {
     {
       id: "1",
       content: "정말 맛있어 보이는 카페네요! 꼭 가보고 싶어요.",
-      author: { id: "user2", name: "이영희" },
+      author: {
+        id: "2",
+        name: "이영희"
+      },
       createdAt: "2024-01-02T10:30:00Z"
     },
     {
       id: "2",
       content: "저도 얼마 전에 다녀왔는데 커피가 정말 맛있었어요.",
-      author: { id: "user1", name: "김철수" },
+      author: {
+        id: "1",
+        name: "김철수"
+      },
       createdAt: "2024-01-02T11:15:00Z"
     },
     {
       id: "3",
       content: "다음에 갈 때는 디저트도 꼭 먹어보세요!",
-      author: { id: "user1", name: "김철수" },
+      author: {
+        id: "1",
+        name: "김철수"
+      },
       createdAt: "2024-01-02T14:45:00Z"
     }
   ]);
-  const currentUserId = 'user1';
+  const currentUserId = "1";
   const [showDropdown, setShowDropdown] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deletingCommentId, setDeletingCommentId] = useState<string | null>(null);
-  const [memo, setMemo] = useState({
+  const [memo, setMemo] = useState<Memo>({
     id: "1",
     title: "강남 맛집 탐방ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
     content: "강남역 3번 출구 앞 새로 생긴 카페.분위기도 좋고 커피도 맛있어요.dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddss",
     author: {
-      id: "user1",
+      id: "2",
       name: "김철수"
     },
+    group: "맛집 탐방",
     createdAt: "2024-01-01T09:00:00Z",
     location: {
       lat: 37.498095,
       lng: 127.027610
     },
-    groupId: "group1",
-    groupName: "맛집 탐방",
     is_hidden: 0
   });
 
@@ -93,7 +118,7 @@ const MemoDetail = () => {
       id: Date.now().toString(),
       content: comment,
       author: {
-        id: currentUserId,
+        id: "1",
         name: "김철수"
       },
       createdAt: new Date().toLocaleString('ko-KR', {
@@ -151,13 +176,14 @@ const MemoDetail = () => {
                     <button onClick={handleDelete}>삭제</button>
                   </>
                 )}
-                {memo.author.id === currentUserId && (
-                  <button onClick={handleToggleHidden}>
-                    {memo.is_hidden === 0 ? '숨기기' : '복원'}
-                  </button>
-                )}
+                <button onClick={handleToggleHidden}>
+                  {memo.is_hidden === 0 ? '숨기기' : '복원'}
+                </button>
                 {memo.is_hidden === 0 && (
-                  <Link to={`/Home?lat=${memo.location.lat}&lng=${memo.location.lng}`}>
+                  <Link 
+                    to={`/Home?id=${memo.id}`} 
+                    className={styles.mapLink}
+                  >
                     지도에서 보기
                   </Link>
                 )}
@@ -171,7 +197,7 @@ const MemoDetail = () => {
         </div>
 
         <div className={styles.memoFooter}>
-          <span>{memo.groupName} ({memo.author.name})</span>
+          <span>{memo.group} ({memo.author.name})</span>
           <span>{new Date(memo.createdAt).toLocaleDateString()}</span>
         </div>
       </div>

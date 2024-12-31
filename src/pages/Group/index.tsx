@@ -3,14 +3,14 @@ import styles from './Group.module.css';
 import moreIcon from '../../assets/images/more.png';
 
 interface Member {
-  id: string;
-  name: string;
+  user_id: string;
+  user_name: string;
   isLeader: boolean;
 }
 
 interface Group {
-  id: string;
-  name: string;
+  group_id: string;
+  group_name: string;
   detail: string;
   members: Member[];
   isUserLeader: boolean;
@@ -20,77 +20,77 @@ interface Group {
 const Group = () => {
   const [groups, setGroups] = useState<Group[]>([
     {
-      id: "1",
-      name: "여행 동호회",
+      group_id: "1",
+      group_name: "여행 동호회",
       detail: "제주도 여행 계획 공유 그룹입니다.",
       members: [
-        { id: "1", name: "김철수", isLeader: true },
-        { id: "2", name: "이영희", isLeader: false },
-        { id: "3", name: "박지성", isLeader: false },
-        { id: "4", name: "최유나", isLeader: false },
-        { id: "5", name: "정민호", isLeader: false },
-        { id: "6", name: "강서연", isLeader: false },
-        { id: "7", name: "윤재호", isLeader: false },
-        { id: "8", name: "송미란", isLeader: false },
-        { id: "9", name: "임현우", isLeader: false },
-        { id: "10", name: "한지은", isLeader: false },
+        { user_id: "1", user_name: "김철수", isLeader: true },
+        { user_id: "2", user_name: "이영희", isLeader: false },
+        { user_id: "3", user_name: "박지성", isLeader: false },
+        { user_id: "4", user_name: "최유나", isLeader: false },
+        { user_id: "5", user_name: "정민호", isLeader: false },
+        { user_id: "6", user_name: "강서연", isLeader: false },
+        { user_id: "7", user_name: "윤재호", isLeader: false },
+        { user_id: "8", user_name: "송미란", isLeader: false },
+        { user_id: "9", user_name: "임현우", isLeader: false },
+        { user_id: "10", user_name: "한지은", isLeader: false },
       ],
       isUserLeader: true,
       createdAt: "2024-01-01"
     },
     {
-      id: "2",
-      name: "맛집 동호회ddddddddddddddddddddddddddddddddddddddddd",
+      group_id: "2",
+      group_name: "맛집 동호회ddddddddddddddddddddddddddddddddddddddddd",
       detail: "대구 맛집 공유 그룹입니다.dddddddddddddddddddddddddddddddddddddddddd",
       members: [
-        { id: "1", name: "김철수", isLeader: true },
-        { id: "2", name: "이영희", isLeader: false },
-        { id: "3", name: "박지성", isLeader: false },
-        { id: "4", name: "최유나", isLeader: false },
-        { id: "5", name: "정민호", isLeader: false },
-        { id: "6", name: "강서연", isLeader: false },
-        { id: "7", name: "윤재호", isLeader: false },
-        { id: "8", name: "송미란", isLeader: false },
-        { id: "9", name: "임현우", isLeader: false },
-        { id: "10", name: "한지은", isLeader: false },
+        { user_id: "1", user_name: "김철수", isLeader: true },
+        { user_id: "2", user_name: "이영희", isLeader: false },
+        { user_id: "3", user_name: "박지성", isLeader: false },
+        { user_id: "4", user_name: "최유나", isLeader: false },
+        { user_id: "5", user_name: "정민호", isLeader: false },
+        { user_id: "6", user_name: "강서연", isLeader: false },
+        { user_id: "7", user_name: "윤재호", isLeader: false },
+        { user_id: "8", user_name: "송미란", isLeader: false },
+        { user_id: "9", user_name: "임현우", isLeader: false },
+        { user_id: "10", user_name: "한지은", isLeader: false },
       ],
       isUserLeader: true,
       createdAt: "2024-01-01"
     },
     {
-      id: "3",
-      name: "자전거 동호회",
+      group_id: "3",
+      group_name: "자전거 동호회",
       detail: "자전거 타는 그룹입니다.",
       members: [
-        { id: "1", name: "김철수", isLeader: true },
-        { id: "2", name: "이영희", isLeader: false },
-        { id: "3", name: "박지성", isLeader: false },
-        { id: "4", name: "최유나", isLeader: false },
-        { id: "5", name: "정민호", isLeader: false },
-        { id: "6", name: "강서연", isLeader: false },
-        { id: "7", name: "윤재호", isLeader: false },
-        { id: "8", name: "송미란", isLeader: false },
-        { id: "9", name: "임현우", isLeader: false },
-        { id: "10", name: "한지은", isLeader: false },
+        { user_id: "1", user_name: "김철수", isLeader: true },
+        { user_id: "2", user_name: "이영희", isLeader: false },
+        { user_id: "3", user_name: "박지성", isLeader: false },
+        { user_id: "4", user_name: "최유나", isLeader: false },
+        { user_id: "5", user_name: "정민호", isLeader: false },
+        { user_id: "6", user_name: "강서연", isLeader: false },
+        { user_id: "7", user_name: "윤재호", isLeader: false },
+        { user_id: "8", user_name: "송미란", isLeader: false },
+        { user_id: "9", user_name: "임현우", isLeader: false },
+        { user_id: "10", user_name: "한지은", isLeader: false },
       ],
       isUserLeader: true,
       createdAt: "2024-01-01"
     },
     {
-      id: "4",
-      name: "경북대 컴학",
+      group_id: "4",
+      group_name: "경북대 컴학",
       detail: "컴학 그룹",
       members: [
-        { id: "1", name: "김철수", isLeader: true },
-        { id: "2", name: "이영희", isLeader: false },
-        { id: "3", name: "박지성", isLeader: false },
-        { id: "4", name: "최유나", isLeader: false },
-        { id: "5", name: "정민호", isLeader: false },
-        { id: "6", name: "강서연", isLeader: false },
-        { id: "7", name: "윤재호", isLeader: false },
-        { id: "8", name: "송미란", isLeader: false },
-        { id: "9", name: "임현우", isLeader: false },
-        { id: "10", name: "한지은", isLeader: false },
+        { user_id: "1", user_name: "김철수", isLeader: true },
+        { user_id: "2", user_name: "이영희", isLeader: false },
+        { user_id: "3", user_name: "박지성", isLeader: false },
+        { user_id: "4", user_name: "최유나", isLeader: false },
+        { user_id: "5", user_name: "정민호", isLeader: false },
+        { user_id: "6", user_name: "강서연", isLeader: false },
+        { user_id: "7", user_name: "윤재호", isLeader: false },
+        { user_id: "8", user_name: "송미란", isLeader: false },
+        { user_id: "9", user_name: "임현우", isLeader: false },
+        { user_id: "10", user_name: "한지은", isLeader: false },
       ],
       isUserLeader: true,
       createdAt: "2024-01-01"
@@ -135,10 +135,10 @@ const Group = () => {
   const handleLeaderChange = () => {
     if (newLeaderId && changingLeaderGroupId) {
       const updatedGroups = groups.map(group => {
-        if (group.id === changingLeaderGroupId) {
+        if (group.group_id === changingLeaderGroupId) {
           const updatedMembers = group.members.map(member => ({
             ...member,
-            isLeader: member.id === newLeaderId
+            isLeader: member.user_id === newLeaderId
           }));
           return { ...group, members: updatedMembers, isUserLeader: false };
         }
@@ -195,19 +195,19 @@ const Group = () => {
       </div>
       <div className={styles.groupGrid}>
         {groups.map(group => (
-          <div key={group.id} className={styles.groupCard}>
+          <div key={group.group_id} className={styles.groupCard}>
             <div className={styles.groupHeader}>
-              <h3 className={styles.groupName}>{group.name}</h3>
-              <button className={styles.moreButton} onClick={(e) => handleMoreClick(e, group.id)}>
+              <h3 className={styles.groupName}>{group.group_name}</h3>
+              <button className={styles.moreButton} onClick={(e) => handleMoreClick(e, group.group_id)}>
                 <img src={moreIcon} alt="더보기" />
               </button>
-              {activeDropdown === group.id && (
+              {activeDropdown === group.group_id && (
                 <div className={styles.dropdown}>
                   <button onClick={() => handleEditClick(group)}>그룹 수정</button>
                   {group.isUserLeader && (
                     <>
-                      <button onClick={() => handleMemberManage(group.id)}>멤버 관리</button>
-                      <button onClick={() => handleChangeLeader(group.id)}>방장 변경</button>
+                      <button onClick={() => handleMemberManage(group.group_id)}>멤버 관리</button>
+                      <button onClick={() => handleChangeLeader(group.group_id)}>방장 변경</button>
                     </>
                   )}
                   <button onClick={() => setShowLeaveConfirm(true)}>나가기</button>
@@ -218,27 +218,27 @@ const Group = () => {
             <div className={styles.memberListWrapper}>
               <div className={styles.memberList}>
                 {group.members.map(member => (
-                  <div key={member.id} className={styles.memberItem}>
-                    {managingGroupId === group.id && !member.isLeader && (
+                  <div key={member.user_id} className={styles.memberItem}>
+                    {managingGroupId === group.group_id && !member.isLeader && (
                       <input
                         type="checkbox"
-                        checked={selectedMembers.includes(member.id)}
-                        onChange={() => handleMemberSelect(member.id)}
+                        checked={selectedMembers.includes(member.user_id)}
+                        onChange={() => handleMemberSelect(member.user_id)}
                       />
                     )}
-                    {changingLeaderGroupId === group.id && !member.isLeader && (
+                    {changingLeaderGroupId === group.group_id && !member.isLeader && (
                       <input
                         type="radio"
-                        checked={newLeaderId === member.id}
-                        onChange={() => setNewLeaderId(member.id)}
+                        checked={newLeaderId === member.user_id}
+                        onChange={() => setNewLeaderId(member.user_id)}
                       />
                     )}
-                    <span>{member.name}</span>
+                    <span>{member.user_name}</span>
                     {member.isLeader && <span className={styles.leaderBadge}>방장</span>}
                   </div>
                 ))}
               </div>
-              {managingGroupId === group.id && (
+              {managingGroupId === group.group_id && (
                 <div className={styles.memberActions}>
                   <button className={`${styles.button} ${styles.cancelButton}`} onClick={() => setManagingGroupId(null)}>
                     취소
@@ -254,7 +254,7 @@ const Group = () => {
                   )}
                 </div>
               )}
-              {changingLeaderGroupId === group.id && (
+              {changingLeaderGroupId === group.group_id && (
                 <div className={styles.memberActions}>
                   <button className={`${styles.button} ${styles.cancelButton}`} onClick={() => setChangingLeaderGroupId(null)}>
                     취소
@@ -280,8 +280,8 @@ const Group = () => {
               <label>그룹명</label>
               <input
                 type="text"
-                value={activeGroup.name}
-                onChange={(e) => setActiveGroup({ ...activeGroup, name: e.target.value })}
+                value={activeGroup.group_name}
+                onChange={(e) => setActiveGroup({ ...activeGroup, group_name: e.target.value })}
                 className={styles.input}
               />
             </div>

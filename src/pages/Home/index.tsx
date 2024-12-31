@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Map, MapMarker, CustomOverlayMap } from "react-kakao-maps-sdk";
 import searchIcon from "../../assets/images/search.png";
 import refreshIcon from "../../assets/images/refresh.png";
@@ -9,10 +9,8 @@ interface Memo {
   id: string;
   title: string;
   content: string;
-  author: {
-    id: string;
-    name: string;
-  };
+  author: string;
+  group: string;
   createdAt: string;
   location: {
     lat: number;
@@ -26,7 +24,8 @@ const mockMemos: Memo[] = [
     id: "1",
     title: "경북대 북문 맛집",
     content: "북문 앞 새로 생긴 돈까스 맛집 발견! 가성비 좋고 특히 소스가 맛있어요.",
-    author: { id: "user1", name: "김철수" },
+    author: "김철수",
+    group: "여행 동호회",
     createdAt: "2024. 01. 01. 14:30",
     location: { lat: 35.890626, lng: 128.613641 },
     is_hidden: 0
@@ -35,7 +34,8 @@ const mockMemos: Memo[] = [
     id: "2",
     title: "대구 수성구 카페",
     content: "수성못 근처 분위기 좋은 카페 찾았어요. 커피가 진짜 맛있네요!",
-    author: { id: "user2", name: "이영희" },
+    author:"이영희",
+    group: "여행 동호회",
     createdAt: "2024. 01. 02. 15:20",
     location: { lat: 35.882213, lng: 128.615107 },
     is_hidden: 0
@@ -44,7 +44,8 @@ const mockMemos: Memo[] = [
     id: "3",
     title: "칠성시장 맛집",
     content: "시장 안쪽에 있는 국밥집인데 정말 맛있어요. 특히 수육이 일품!",
-    author: { id: "user3", name: "박지민" },
+    author: "박지민",
+    group: "여행 동호회",
     createdAt: "2024. 01. 03. 12:00",
     location: { lat: 35.881215, lng: 128.619108 },
     is_hidden: 0
@@ -53,7 +54,8 @@ const mockMemos: Memo[] = [
     id: "4",
     title: "동성로 신상 카페",
     content: "동성로 중앙에 새로 생긴 카페입니다. 디저트가 맛있어요!",
-    author: { id: "user1", name: "김철수" },
+    author:"김철수",
+    group: "여행 동호회",
     createdAt: "2024. 01. 04. 16:45",
     location: { lat: 35.880212, lng: 128.616324 },
     is_hidden: 0
@@ -62,7 +64,8 @@ const mockMemos: Memo[] = [
     id: "5",
     title: "반월당 라멘",
     content: "반월당역 3번 출구 앞 라멘집. 진한 돈코츠 라멘이 일품입니다.",
-    author: { id: "user4", name: "정민수" },
+    author: "정민수",
+    group: "여행 동호회",
     createdAt: "2024. 01. 05. 18:30",
     location: { lat: 35.870214, lng: 128.612614 },
     is_hidden: 0
@@ -71,7 +74,8 @@ const mockMemos: Memo[] = [
     id: "6",
     title: "중앙로 초밥집",
     content: "가성비 좋은 초밥집 발견! 점심특선이 특히 추천해요.",
-    author: { id: "user5", name: "최유진" },
+    author: "최유진",
+    group: "여행 동호회",
     createdAt: "2024. 01. 06. 13:15",
     location: { lat: 35.885210, lng: 128.613754 },
     is_hidden: 0
@@ -80,7 +84,8 @@ const mockMemos: Memo[] = [
     id: "7",
     title: "대구 서문시장 맛집",
     content: "서문시장 칼국수 맛집입니다. 면이 쫄깃하고 국물이 끝내줘요!",
-    author: { id: "user2", name: "이영희" },
+    author: "이영희",
+    group: "여행 동호회",
     createdAt: "2024. 01. 07. 11:20",
     location: { lat: 35.884211, lng: 128.621614 },
     is_hidden: 0
@@ -89,7 +94,8 @@ const mockMemos: Memo[] = [
     id: "8",
     title: "남산동 카페",
     content: "남산동 골목에 있는 아기자기한 카페에요. 분위기가 너무 좋습니다.",
-    author: { id: "user3", name: "박지민" },
+    author: "박지민",
+    group: "여행 동호회",
     createdAt: "2024. 01. 08. 15:00",
     location: { lat: 35.883212, lng: 128.613334 },
     is_hidden: 0
@@ -98,7 +104,8 @@ const mockMemos: Memo[] = [
     id: "9",
     title: "대구 약령시 한방카페",
     content: "약령시장 안에 있는 한방차 전문 카페입니다. 계절차가 맛있어요.",
-    author: { id: "user4", name: "정민수" },
+    author: "정민수",
+    group: "여행 동호회",
     createdAt: "2024. 01. 09. 14:40",
     location: { lat: 35.875212, lng: 128.589341 },
     is_hidden: 0
@@ -107,7 +114,8 @@ const mockMemos: Memo[] = [
     id: "10",
     title: "봉덕동 맛집",
     content: "봉덕동 골목에 있는 숨은 맛집이에요. 된장찌개가 정말 맛있습니다!",
-    author: { id: "user5", name: "최유진" },
+    author: "최유진",
+    group: "여행 동호회",
     createdAt: "2024. 01. 10. 12:30",
     location: { lat: 35.873216, lng: 128.609324 },
     is_hidden: 0
@@ -117,6 +125,7 @@ const mockMemos: Memo[] = [
 const Home = () => {
   const NEARBY_MEMOS_LIMIT = 8;
   const navigate = useNavigate();
+  const location = useLocation();
   const [position, setPosition] = useState({ lat: 33.450701, lng: 126.570667 });
   const [center, setCenter] = useState({ lat: 33.450701, lng: 126.570667 });
   const [isOpen, setIsOpen] = useState(false);
@@ -132,26 +141,36 @@ const Home = () => {
   const [isSearchListVisible, setIsSearchListVisible] = useState(false);
 
   useEffect(() => {
-    setPs(new kakao.maps.services.Places());
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const newPosition = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
-          setPosition(newPosition);
-          setCenter(newPosition);
-        },
-        (error) => {
-          console.error("Error getting current position:", error);
-        }
-      );
-    }
-  }, []);
+    const queryParams = new URLSearchParams(location.search);
+    const memoId = queryParams.get('id');
 
-  useEffect(() => {
-    const getNearbyMemos = async () => {
+    if (memoId) {
+      const memoToOpen = mockMemos.find(memo => memo.id === memoId);
+      if (memoToOpen) {
+        setCenter(memoToOpen.location);
+        setPosition(memoToOpen.location);
+        setViewMemo(memoToOpen);
+      }
+    } else {
+      setPs(new kakao.maps.services.Places());
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const newPosition = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            setPosition(newPosition);
+            setCenter(newPosition);
+          },
+          (error) => {
+            console.error("Error getting current position:", error);
+          }
+        );
+      }
+    }
+
+    const fetchMemos = async () => {
       if (mockMemos.length >= NEARBY_MEMOS_LIMIT) {
         const memos = await fetchNearbyMemos();
         setNearbyMemos(memos);
@@ -159,8 +178,8 @@ const Home = () => {
         setNearbyMemos(mockMemos);
       }
     };
-    getNearbyMemos();
-  }, [center]);
+    fetchMemos();
+  }, [location]);
 
   const handleSave = async () => {
     const dataToSave = {
@@ -320,7 +339,7 @@ const Home = () => {
           onDragEnd={(marker) => handleDragEnd(marker)}
         />
         {isOpen && (
-          <CustomOverlayMap position={position} yAnchor={1.2}>
+          <CustomOverlayMap position={position} yAnchor={1.18}>
             <div 
               className={styles.memoContainer} 
               onClick={(e) => e.stopPropagation()} 
@@ -367,7 +386,7 @@ const Home = () => {
           />
         ))}
         {viewMemo && (
-          <CustomOverlayMap position={viewMemo.location} yAnchor={1.2}>
+          <CustomOverlayMap position={viewMemo.location} yAnchor={1.18}>
             <div 
               className={styles.memoContainer}
               onClick={(e) => e.stopPropagation()}
@@ -392,9 +411,9 @@ const Home = () => {
                 className={`${styles.memoTextarea} ${styles.readOnlyTextarea}`}
               />
               <div className={styles.memoFooter}>
-                <p className={styles.memoAuthor}>작성자: {viewMemo.author.name}</p>
+                <p className={styles.memoAuthor}>{viewMemo.group} ({viewMemo.author})</p>
                 <div className={styles.createdAtAndHideContainer}>
-                  <p className={styles.memoCreatedAt}>작성 시간: {viewMemo.createdAt}</p>
+                  <p className={styles.memoCreatedAt}>{viewMemo.createdAt}</p>
                   <button
                     onClick={() => handleHideMemo(viewMemo.id)}
                     className={styles.hideButton}
