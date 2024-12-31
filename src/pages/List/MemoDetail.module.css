@@ -1,0 +1,272 @@
+.container {
+  padding: 30px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.backButton {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.backButton:hover {
+  opacity: 0.7;
+}
+
+.moreButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.moreButton img {
+  width: 12px;
+  height: 12px;
+}
+
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 25px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 10;
+  min-width: 100px;
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+}
+
+.dropdown button,
+.dropdown a {
+  display: block;
+  width: 100%;
+  padding: 10px 15px;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: pointer;
+  white-space: nowrap;
+  color: inherit;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.dropdown button:hover,
+.dropdown a:hover {
+  background-color: #f9f9fa;
+  color: #333;
+}
+
+.memoCard {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.memoHeader {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 28px;
+}
+
+.titleSection {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.memoTitle {
+  margin: 0;
+  font-size: 19px;
+  color: #333;
+}
+  
+.hiddenBadge {
+  padding: 4px 8px;
+  background-color: #8e9aa5;
+  color: white;
+  border-radius: 4px;
+  font-size: 12px;
+}
+  
+.memoActions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+  
+.actionButton,
+.deleteButton,
+.toggleButton {
+  padding: 7px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.actionButton {
+  background-color: #f5f7fc;
+  color: #5c80c9;
+}
+
+.deleteButton {
+  background-color: #f5f7fc;
+  color: #ff4444;
+}
+
+.actionButton:hover,
+.deleteButton:hover {
+  background: #f1f1f1;
+}
+
+.toggleButton {
+  background-color: #8e9aa5;
+  color: white;
+}
+
+.toggleButton:hover {
+  background-color: #677179;
+}
+
+.mapLink {
+  padding: 5.8px 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #5c80c9;
+  color: white;
+  font-size: 13px;
+}
+
+.mapLink:hover {
+  background-color: #385a9e;
+  color: rgba(255, 255, 255, 0.959);
+}
+
+.memoContent {
+  color: #666;
+  font-size: 15px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.memoFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #777;
+  font-size: 11.5px;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+}
+
+.commentSection {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.commentTitle {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.commentForm {
+  margin-bottom: 20px;
+}
+
+.commentInputWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.commentInput {
+  flex: 1;
+  height: 20px;
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  resize: none;
+  line-height: 20px;
+}
+
+.sendButton {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  width: 36px;
+}
+
+.sendButton img {
+  width: 18px;
+  height: 18px;
+}
+
+.sendButton:hover {
+  opacity: 0.7;
+}
+
+.commentList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.commentItem {
+  padding: 16px;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+}
+
+.commentHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.commentAuthor {
+  font-weight: 500;
+  color: #333;
+  font-size: 13px;
+}
+
+.commentDate {
+  color: #777;
+  font-size: 11.5px;
+}
+
+.commentContent {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.actionButton:focus,
+.deleteButton:focus,
+.toggleButton:focus,
+.mapLink:focus,
+.sendButton:focus,
+.moreButton:focus {
+  outline: none;
+}

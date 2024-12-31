@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import List from "./List";
+import MemoDetail from "./List/MemoDetail";
 import User from "./User";
 import Group from "./Group";
 import SignUp from "./SignUp";
@@ -15,6 +16,7 @@ const Router = () => {
         <Route path = "/*" element={<MainLayout/>}>
             <Route path = "Home" element={<Home/>}></Route>
             <Route path = "list" element={<List/>}></Route>
+            <Route path = "list/:id" element={<MemoDetail/>}></Route>
             <Route path = "user" element={<User/>}></Route>
             <Route path = "group" element={<Group/>}></Route>
         </Route>

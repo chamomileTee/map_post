@@ -38,11 +38,16 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
+.hiddenMemo {
+  opacity: 0.6;
+  background-color: #f8f9fa;
+}
+
 .memoHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 28px;
 }
 
 .memoTitle {
@@ -51,39 +56,32 @@
   color: #333;
 }
 
+.memoTitle:hover {
+  text-decoration: underline;
+}
+
 .memoActions {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   align-items: center;
 }
 
-.actionButton {
+.toggleButton {
+  width: 70px;
   padding: 7px 12px;
   border: none;
   border-radius: 6px;
-  background-color: #f5f7fc;
-  color: #5c80c9;
+  background-color: #8e9aa5;
   font-size: 13px;
-  cursor: pointer;
+  color: white;
 }
 
-.deleteButton {
-  padding: 7px 12px;
-  border: none;
-  border-radius: 6px;
-  background-color: #f5f7fc;
-  color: #ff4444;
-  font-size: 13px;
-  cursor: pointer;
-}
-
-.actionButton:hover,
-.deleteButton:hover {
-  background-color: #f1f1f1;
+.toggleButton:hover {
+  background-color: #677179;
 }
 
 .mapLink {
-  padding: 6px 12px;
+  padding: 5.8px 12px;
   border: none;
   border-radius: 6px;
   background-color: #5c80c9;
@@ -96,8 +94,7 @@
   color: rgba(255, 255, 255, 0.959);
 }
 
-.actionButton:focus,
-.deleteButton:focus,
+.toggleButton:focus,
 .mapLink:focus {
   outline: none;
 }
@@ -107,6 +104,7 @@
   color: #666;
   font-size: 15px;
   line-height: 1.5;
+  flex-grow: 1;
 }
 
 .memoFooter {
