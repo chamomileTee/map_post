@@ -1,6 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import down from '../../assets/images/down.png'
 import styles from './List.module.css';
+
+interface GroupResponse {
+  id: string;
+  name: string;
+}
 
 interface Memo {
   id: string;
@@ -10,7 +16,10 @@ interface Memo {
     id: string;
     name: string;
   };
-  group: string;
+  group: {
+    id: string;
+    name: string;
+  };
   createdAt: string;
   location: {
     lat: number;
@@ -20,8 +29,56 @@ interface Memo {
 }
 
 const List = () => {
-  const [selectedGroup, setSelectedGroup] = useState<string>('all');
   const [currentPage, setCurrentPage] = useState(1);
+  const [groups, setGroups] = useState<GroupResponse[]>([
+      { id: 'all', name: '전체 메모' },
+      { id: 'mine', name: '나만의 메모' }
+    ]);
+  const [selectedGroup, setSelectedGroup] = useState('all');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const getGroups = async (): Promise<GroupResponse[]> => {
+    // API 호출을 시뮬레이션하는 임시 코드
+    return [
+      { id: '1', name: '그룹 1' },
+      { id: '2', name: '경북대 컴학' }
+    ];
+  };
+
+  const handleGroupSelect = async (groupId: string) => {
+    setSelectedGroup(groupId);
+    setIsDropdownOpen(false);
+    
+    try {
+      const response = await getGroups();
+      const allGroups = [
+        { id: 'all', name: '전체 메모' },
+        { id: 'mine', name: '나만의 메모' },
+        ...response
+      ];
+      setGroups(allGroups);
+    } catch (error) {
+      console.error('Failed to fetch groups:', error);
+    }
+  };
+
+  useEffect(() => {
+    const initializeGroups = async () => {
+      try {
+        const response = await getGroups();
+        const allGroups = [
+          { id: 'all', name: '전체 메모' },
+          { id: 'mine', name: '나만의 메모' },
+          ...response
+        ];
+        setGroups(allGroups);
+      } catch (error) {
+        console.error('Failed to initialize groups:', error);
+      }
+    };
+  
+    initializeGroups();
+  }, []);
 
   // 예시 데이터
   const [memos, setMemos] = useState<Memo[]>([
@@ -33,7 +90,10 @@ const List = () => {
         id: "1",
         name: "김철수"
       },
-      group: "맛집 탐방",
+      group: {
+        id: "1",
+        name: "맛집 탐방"
+      },
       createdAt: "2024-01-01T09:00:00Z",
       location: {
         lat: 35.890626,
@@ -49,7 +109,10 @@ const List = () => {
         id: "2",
         name: "이영희"
       },
-      group: "서울 명소",
+      group: {
+        id: "2",
+        name: "서울 명소"
+      },
       createdAt: "2024-01-02T14:30:00Z",
       location: {
         lat: 37.557527,
@@ -95,15 +158,26 @@ const List = () => {
       <div className={styles.header}>
         <h2>메모 리스트</h2>
         <div className={styles.groupSelector}>
-          <select 
-            value={selectedGroup} 
-            onChange={(e) => setSelectedGroup(e.target.value)}
-            className={styles.select}
+          <button 
+            className={styles.dropdownButton}
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           >
-            <option value="all">전체 글</option>
-            <option value="group1">그룹 1</option>
-            <option value="group2">그룹 2</option>
-          </select>
+            {groups.find(g => g.id === selectedGroup)?.name}
+            <img src={down} alt="down" className={styles.dropdownIcon} />
+          </button>
+          {isDropdownOpen && (
+            <div className={styles.dropdownMenu}>
+              {groups.map((group) => (
+                <button
+                  key={group.id}
+                  className={styles.dropdownItem}
+                  onClick={() => handleGroupSelect(group.id)}
+                >
+                  {group.name}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
@@ -133,7 +207,7 @@ const List = () => {
             </div>
             <p className={styles.memoContent}>{memo.content}</p>
             <div className={styles.memoFooter}>
-              <span>{memo.group} ({memo.author.name})</span>
+              <span>{memo.group.name} ({memo.author.name})</span>
               <span>{new Date(memo.createdAt).toLocaleDateString()}</span>
             </div>
           </div>

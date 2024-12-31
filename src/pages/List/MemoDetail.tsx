@@ -13,7 +13,10 @@ interface Memo {
     id: string;
     name: string;
   };
-  group: string;
+  group: {
+    id: string;
+    name: string;
+  };
   createdAt: string;
   location: {
     lat: number;
@@ -73,10 +76,13 @@ const MemoDetail = () => {
     title: "강남 맛집 탐방ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
     content: "강남역 3번 출구 앞 새로 생긴 카페.분위기도 좋고 커피도 맛있어요.dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddss",
     author: {
-      id: "2",
+      id: "1",
       name: "김철수"
     },
-    group: "맛집 탐방",
+    group: {
+      id: "1",
+      name: "맛집 탐방"
+    },
     createdAt: "2024-01-01T09:00:00Z",
     location: {
       lat: 37.498095,
@@ -197,7 +203,7 @@ const MemoDetail = () => {
         </div>
 
         <div className={styles.memoFooter}>
-          <span>{memo.group} ({memo.author.name})</span>
+          <span>{memo.group.name} ({memo.author.name})</span>
           <span>{new Date(memo.createdAt).toLocaleDateString()}</span>
         </div>
       </div>

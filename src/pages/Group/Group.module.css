@@ -56,6 +56,7 @@
   color: #3d3d3d;
 }
 
+.saveButton:disabled,
 .changeButton:disabled {
   background: #e0e0e0;
   color: #999;
@@ -271,7 +272,9 @@
 .button:focus,
 .moreButton:focus,
 .dropdown button:focus,
-.pagination button:focus {
+.pagination button:focus,
+.removeButton:focus,
+.searchWrapper .searchButton:focus {
   outline: none;
 }
 
@@ -297,4 +300,58 @@
 .pageButton:disabled {
   color: #ccc;
   cursor: not-allowed;
-}  
+}
+
+.searchWrapper {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.searchWrapper input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+}
+
+.searchWrapper .searchButton {
+  background-color: white;
+  color: #5c80c9;
+  padding: 0px 0px 0px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  width: 50px;
+}
+
+.memberWrapper {
+  margin-left: 8px;
+  width: 97%;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+}
+
+.memberWrapper .memberItem {
+  font-size: 14px;
+  margin-top: 10px 0px 10px 10px;
+}
+
+.memberWrapper .memberItem .xButton {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.memberWrapper .memberItem .xButton:hover {
+  color: #f76538;
+}

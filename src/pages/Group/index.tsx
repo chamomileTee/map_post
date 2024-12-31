@@ -105,6 +105,13 @@ const Group = () => {
   const [changingLeaderGroupId, setChangingLeaderGroupId] = useState<string | null>(null);
   const [newLeaderId, setNewLeaderId] = useState<string | null>(null);
   const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [newGroup, setNewGroup] = useState({
+    name: '',
+    detail: '',
+    members: [] as { id: string; name: string }[]
+  });
+  const [searchId, setSearchId] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
   const handleMoreClick = (e: React.MouseEvent, groupId: string) => {
@@ -179,7 +186,7 @@ const Group = () => {
     }
   };
 
-    const handleNextPage = () => {
+  const handleNextPage = () => {
     // 임시로 최대 페이지를 5로 설정
     const maxPage = 5;
     if (currentPage < maxPage) {
@@ -187,11 +194,42 @@ const Group = () => {
     }
   };
 
+  const handleCreateGroup = () => {
+    if (window.confirm("그룹을 생성하시겠습니까?")) {
+      // 그룹 생성 로직
+      setShowCreateModal(false);
+      setNewGroup({ name: '', detail: '', members: [] });
+    }
+  };
+
+  const handleSearchUser = () => {
+    if (!searchId.trim()) return;
+    // 실제로는 API 호출하여 사용자 검색
+    const mockUser = { id: searchId, name: `${searchId}` };
+    if (!newGroup.members.find(m => m.id === mockUser.id)) {
+      setNewGroup({
+        ...newGroup,
+        members: [...newGroup.members, mockUser]
+      });
+    }
+    setSearchId('');
+  };
+
+  const handleRemoveMember = (memberId: string) => {
+    setNewGroup({
+      ...newGroup,
+      members: newGroup.members.filter(m => m.id !== memberId)
+    });
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <h2>내 그룹</h2>
-        <button className={`${styles.button} ${styles.addButton}`}>+ 새 그룹 만들기</button>
+        <button className={`${styles.button} ${styles.addButton}`}
+        onClick={() => setShowCreateModal(true)}>
+          + 새 그룹 만들기
+        </button>
       </div>
       <div className={styles.groupGrid}>
         {groups.map(group => (
@@ -312,6 +350,80 @@ const Group = () => {
             <div className={styles.modalActions}>
               <button className={`${styles.button} ${styles.cancelButton}`} onClick={() => setShowLeaveConfirm(false)}>취소</button>
               <button className={`${styles.button} ${styles.dangerButton}`}>나가기</button>
+            </div>
+          </div>
+        </div>
+      )}
+      {showCreateModal && (
+        <div className={styles.modal}>
+          <div className={styles.modalContent}>
+            <h3>새 그룹 만들기</h3>
+            <div className={styles.formGroup}>
+              <label>그룹명</label>
+              <input
+                type="text"
+                value={newGroup.name}
+                onChange={(e) => setNewGroup({ ...newGroup, name: e.target.value })}
+                className={styles.input}
+                placeholder="그룹 이름을 입력하세요"
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label>그룹 설명</label>
+              <textarea
+                value={newGroup.detail}
+                onChange={(e) => setNewGroup({ ...newGroup, detail: e.target.value })}
+                className={styles.textarea}
+                placeholder="그룹 설명을 입력하세요"
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label>멤버 추가</label>
+              <div className={styles.searchWrapper}>
+                <input
+                  type="text"
+                  value={searchId}
+                  onChange={(e) => setSearchId(e.target.value)}
+                  className={styles.input}
+                  placeholder="사용자 ID를 입력하세요"
+                />
+                <button 
+                  className={styles.searchButton}
+                  onClick={handleSearchUser}
+                >
+                  찾기
+                </button>
+              </div>
+            </div>
+            <div className={styles.memberWrapper}>
+              <div className={styles.memberList}>
+                {newGroup.members.map(member => (
+                  <div key={member.id} className={styles.memberItem}>
+                    <span>{member.name}</span>
+                    <button
+                      className={styles.xButton}
+                      onClick={() => handleRemoveMember(member.id)}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className={styles.modalActions}>
+              <button
+                onClick={() => setShowCreateModal(false)}
+                className={`${styles.button} ${styles.cancelButton}`}
+              >
+                취소
+              </button>
+              <button
+                onClick={handleCreateGroup}
+                className={`${styles.button} ${styles.saveButton}`}
+                disabled={!newGroup.name || newGroup.members.length === 0}
+              >
+                그룹 생성
+              </button>
             </div>
           </div>
         </div>

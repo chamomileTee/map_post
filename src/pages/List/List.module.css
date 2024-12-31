@@ -14,15 +14,53 @@
 
 .groupSelector {
   width: 200px;
+  position: relative;
 }
 
-.select {
+.dropdownButton {
   width: 100%;
-  padding: 8px;
+  padding: 8px 12px;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   background-color: white;
   font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.dropdownIcon {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.2s ease;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 100;
+}
+
+.dropdownItem {
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.dropdownItem:hover {
+  background-color: #f5f7fc;
+  color: #5c80c9;
 }
 
 .memoList {
@@ -94,6 +132,9 @@
   color: rgba(255, 255, 255, 0.959);
 }
 
+.dropdownButton:focus,
+.dropdownIcon:focus,
+.dropdownItem:focus,
 .toggleButton:focus,
 .mapLink:focus {
   outline: none;

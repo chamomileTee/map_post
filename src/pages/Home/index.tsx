@@ -1,9 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Map, MapMarker, CustomOverlayMap } from "react-kakao-maps-sdk";
+import down from '../../assets/images/down.png'
 import searchIcon from "../../assets/images/search.png";
 import refreshIcon from "../../assets/images/refresh.png";
 import styles from './Home.module.css';
+
+interface GroupResponse {
+  id: string;
+  name: string;
+}
 
 interface Memo {
   id: string;
@@ -123,7 +129,7 @@ const mockMemos: Memo[] = [
 ];
 
 const Home = () => {
-  const NEARBY_MEMOS_LIMIT = 8;
+  const NEARBY_MEMOS_LIMIT = 5;
   const navigate = useNavigate();
   const location = useLocation();
   const [position, setPosition] = useState({ lat: 33.450701, lng: 126.570667 });
@@ -139,11 +145,17 @@ const Home = () => {
   const [map, setMap] = useState<kakao.maps.Map>();
   const [ps, setPs] = useState<kakao.maps.services.Places>();
   const [isSearchListVisible, setIsSearchListVisible] = useState(false);
+  const [groups, setGroups] = useState<GroupResponse[]>([
+    { id: 'all', name: '전체 메모' },
+    { id: 'mine', name: '나만의 메모' }
+  ]);
+  const [selectedGroup, setSelectedGroup] = useState('all');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const memoId = queryParams.get('id');
-
+    
     if (memoId) {
       const memoToOpen = mockMemos.find(memo => memo.id === memoId);
       if (memoToOpen) {
@@ -153,6 +165,7 @@ const Home = () => {
       }
     } else {
       setPs(new kakao.maps.services.Places());
+      
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -169,7 +182,21 @@ const Home = () => {
         );
       }
     }
+  }, [location]);
 
+  const fetchNearbyMemos = useCallback(async () => {
+    const sortedMemos = memos
+      .filter(memo => memo.is_hidden === 0)
+      .map((memo) => ({
+        ...memo,
+        distance: Math.abs(memo.location.lat - center.lat) + Math.abs(memo.location.lng - center.lng),
+      }))
+      .sort((a, b) => a.distance - b.distance)
+      .slice(0, NEARBY_MEMOS_LIMIT);
+    return sortedMemos;
+  }, [center, memos]);
+
+  useEffect(() => {
     const fetchMemos = async () => {
       if (mockMemos.length >= NEARBY_MEMOS_LIMIT) {
         const memos = await fetchNearbyMemos();
@@ -179,7 +206,49 @@ const Home = () => {
       }
     };
     fetchMemos();
-  }, [location]);
+  }, [center, fetchNearbyMemos]);
+
+  useEffect(() => {
+    const initializeGroups = async () => {
+      try {
+        const response = await getGroups();
+        const allGroups = [
+          { id: 'all', name: '전체 메모' },
+          { id: 'mine', name: '나만의 메모' },
+          ...response
+        ];
+        setGroups(allGroups);
+      } catch (error) {
+        console.error('Failed to initialize groups:', error);
+      }
+    };
+    initializeGroups();
+  }, []);
+
+  const getGroups = async (): Promise<GroupResponse[]> => {
+    // API 호출을 시뮬레이션하는 임시 코드
+    return [
+      { id: '1', name: '그룹 1' },
+      { id: '2', name: '경북대 컴학' }
+    ];
+  };
+
+  const handleGroupSelect = async (groupId: string) => {
+    setSelectedGroup(groupId);
+    setIsDropdownOpen(false);
+    
+    try {
+      const response = await getGroups();
+      const allGroups = [
+        { id: 'all', name: '전체 메모' },
+        { id: 'mine', name: '나만의 메모' },
+        ...response
+      ];
+      setGroups(allGroups);
+    } catch (error) {
+      console.error('Failed to fetch groups:', error);
+    }
+  };
 
   const handleSave = async () => {
     const dataToSave = {
@@ -188,6 +257,8 @@ const Home = () => {
       position: position,
     };
     console.log("Saving data:", dataToSave);
+    setTitle("");
+    setMemo("");
     setIsOpen(false);
   };
 
@@ -264,18 +335,6 @@ const Home = () => {
     setIsSearchListVisible(false);
   };
 
-  const fetchNearbyMemos = async () => {
-    const sortedMemos = memos
-      .filter(memo => memo.is_hidden === 0)
-      .map((memo) => ({
-        ...memo,
-        distance: Math.abs(memo.location.lat - center.lat) + Math.abs(memo.location.lng - center.lng),
-      }))
-      .sort((a, b) => a.distance - b.distance)
-      .slice(0, NEARBY_MEMOS_LIMIT);
-    return sortedMemos;
-  };
-
   const handleMapCenterChanged = (map: kakao.maps.Map) => {
     const newCenter = map.getCenter();
     setCenter({
@@ -298,17 +357,41 @@ const Home = () => {
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-      <div className={styles.searchContainer}>
-        <input
-          type="text"
-          value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && searchPlaces()}
-          className={styles.searchInput}
-        />
-        <button onClick={searchPlaces} className={styles.searchButton}>
-          <img src={searchIcon} alt="Search" className={styles.searchIcon} />
-        </button>
+      <div className={styles.filterContainer}>
+        <div className={styles.groupSelector}>
+          <button 
+            className={styles.dropdownButton}
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          >
+            {groups.find(g => g.id === selectedGroup)?.name}
+            <img src={down} alt="down" className={styles.dropdownIcon} />
+          </button>
+          {isDropdownOpen && (
+            <div className={styles.dropdownMenu}>
+              {groups.map((group) => (
+                <button
+                  key={group.id}
+                  className={styles.dropdownItem}
+                  onClick={() => handleGroupSelect(group.id)}
+                >
+                  {group.name}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className={styles.searchContainer}>
+          <input
+            type="text"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && searchPlaces()}
+            className={styles.searchInput}
+          />
+          <button onClick={searchPlaces} className={styles.searchButton}>
+            <img src={searchIcon} alt="Search" className={styles.searchIcon} />
+          </button>
+        </div>
       </div>
       {isSearchListVisible && places.length > 0 && (
         <div className={styles.searchResults}>
