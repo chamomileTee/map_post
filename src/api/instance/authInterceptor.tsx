@@ -25,7 +25,7 @@ export const setupAuthInterceptor = () => {
     (response: AxiosResponse) => {
       const newToken = response.headers['authorization'] || response.headers['Authorization'];
       if (newToken) {
-        const token = newToken.startsWith('Bearer ') ? newToken : `Bearer ${newToken}`;
+        const token = newToken.startsWith('Bearer ') ? newToken.replace('Bearer ', '') : newToken;
         setAuthToken(token);
         store.dispatch(setAuth(token));
       }
