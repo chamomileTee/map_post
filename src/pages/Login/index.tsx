@@ -2,6 +2,9 @@ import styles from './Login.module.css';
 import logo from '../../assets/images/logo_long.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setAuth } from '../../store/slices/authSlice';
+import { login } from '../../api/services/auth/auth';
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -9,7 +12,8 @@ const Login = () => {
         password: '',
     });
     const [error, setError] = useState('');
-    const navigate = useNavigate(); // React Router에서 페이지 이동에 사용
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -21,35 +25,22 @@ const Login = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setError(''); // 에러 상태 초기화
+        setError('');
 
         try {
-            const response = await fetch('BE_API_URL/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email: formData.email,
-                    password: formData.password,
-                }),
-            });
+            const data = await login(formData.email, formData.password);
+            alert('로그인에 성공하였습니다.');
+            
+            // Redux store에 인증 정보 저장
+            dispatch(setAuth(data.token));
 
-            if (response.ok) {
-                const data = await response.json();
-                alert('로그인에 성공하였습니다.');
-                
-                // 토큰 저장 (예: localStorage 또는 cookie)
-                localStorage.setItem('authToken', data.token);
+            // 로컬 스토리지에 토큰 저장 (선택적)
+            localStorage.setItem('authToken', data.token);
 
-                navigate('/Home');
-            } else {
-                const errorData = await response.json();
-                setError(errorData.message || '로그인에 실패하였습니다.');
-            }
+            navigate('/Home');
         } catch (err) {
             console.error('Error:', err);
-            setError('서버 오류가 발생하였습니다.');
+            setError('로그인에 실패하였습니다. 이메일/비밀번호를 확인해주세요.');
         }
     };
 
