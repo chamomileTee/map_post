@@ -2,8 +2,6 @@ import styles from './Login.module.css';
 import logo from '../../assets/images/logo_long.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { setAuth } from '../../store/slices/authSlice';
 import { login } from '../../api/services/auth/auth';
 
 const Login = () => {
@@ -13,7 +11,6 @@ const Login = () => {
     });
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -28,13 +25,10 @@ const Login = () => {
         setError('');
 
         try {
-            const data = await login(formData.email, formData.password);
+            await login(formData.email, formData.password);
             alert('로그인에 성공하였습니다.');
-            
-            // Redux store에 인증 정보 저장
-            dispatch(setAuth(data.token));
 
-            navigate('/Home');
+            setTimeout(() => navigate('/Home'), 100);
         } catch (err) {
             console.error('Error:', err);
             setError('로그인에 실패하였습니다. 이메일/비밀번호를 확인해주세요.');

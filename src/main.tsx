@@ -6,6 +6,9 @@ import './index.css'
 import Router from './pages'
 import { setAuthToken } from './api/instance'
 import { setAuth } from './store/slices/authSlice'
+import { setupAuthInterceptor } from './api/instance/authInterceptor'  // 이 줄을 추가
+
+setupAuthInterceptor();
 
 const token = localStorage.getItem('authToken');
 if (token) {

@@ -15,14 +15,13 @@ const Sidebar = () => {
 
     const handleLogout = async () => {
         try {
-            console.log()
-            await logout();
-            dispatch(clearAuth());
-            redirectToLogin();
+          await logout();
+          dispatch(clearAuth());
+          redirectToLogin();
         } catch (error) {
-            console.error('Logout failed:', error);
+          console.error('Logout failed:', error);
         }
-    };
+      };
     return (
         <div className={styles.Sidebar}>
             <Link to="/Home" className={styles.logoContainer}>
