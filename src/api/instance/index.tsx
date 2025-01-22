@@ -12,8 +12,15 @@ export const axiosInstance = axios.create({
 
 export const setAuthToken = (token: string) => {
   axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  localStorage.setItem('authToken', token);
 };
 
 export const clearAuthToken = () => {
   delete axiosInstance.defaults.headers.common['Authorization'];
+  localStorage.removeItem('authToken');
 };
+
+const token = localStorage.getItem('authToken');
+if (token) {
+  setAuthToken(token);
+}

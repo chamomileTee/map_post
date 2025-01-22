@@ -34,9 +34,6 @@ const Login = () => {
             // Redux store에 인증 정보 저장
             dispatch(setAuth(data.token));
 
-            // 로컬 스토리지에 토큰 저장 (선택적)
-            localStorage.setItem('authToken', data.token);
-
             navigate('/Home');
         } catch (err) {
             console.error('Error:', err);
